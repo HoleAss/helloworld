@@ -1,16 +1,9 @@
 var
-    http = require('http'),
-    url = require('url'),
-    querystring = require('querystring'),
-    port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+    express = require('express'),
+    app = express();
+app.engine('html', require('ejs').renderFile);
+app.get('/', function(req, res) {
+    res.sendfile('index.html');
+});
 
-function accept(req, res) {
-    res.writeHead(200, {
-        'Content-Type': 'text/plain',
-        'Cache-Control': 'no-cache'
-    });
-    res.end("Ty PIDOR");
-}
-
-http.createServer(accept).listen(port);
+app.listen(8080);
