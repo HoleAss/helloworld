@@ -1,22 +1,16 @@
-// server.js
-// Для начала установим зависимости.
-const http = require('http');
-const routing = require('./routing');
-
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+var
+    http = require('http'),
+    url = require('url'),
+    querystring = require('querystring'),
+    port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
-let server = new http.Server(function(req, res) {
-    // API сервера будет принимать только POST-запросы и только JSON, так что записываем
-    // всю нашу полученную информацию в переменную jsonString
-    var jsonString = '';
-    res.setHeader('Content-Type', 'application/json');
-    req.on('data', (data) => { // Пришла информация - записали.
-        jsonString += data;
-});
+function accept(req, res) {
+    res.writeHead(200, {
+        'Content-Type': 'text/plain',
+        'Cache-Control': 'no-cache'
+    });
+    res.end("OK");
+}
 
-    req.on('end', () => {// Информации больше нет - передаём её дальше.
-        routing.define(req, res, jsonString); // Функцию define мы ещё не создали.
-});
-});
-server.listen(port, ip);
+http.createServer(accept).listen(port);
