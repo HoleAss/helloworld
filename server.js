@@ -10,7 +10,7 @@ function accept(req, res) {
         'Content-Type': 'text/plain',
         'Cache-Control': 'no-cache'
     });
-    res.end("OK");
+    res.end("Ty PIDOR");
 }
 
 http.createServer(accept).listen(port);
